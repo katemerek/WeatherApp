@@ -1,18 +1,14 @@
 package ru.merkulova.WeatherApp.controllers;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import ru.merkulova.WeatherApp.dto.MeasurementDTO;
 import ru.merkulova.WeatherApp.models.Measurement;
 import ru.merkulova.WeatherApp.services.MeasurementsService;
-import ru.merkulova.WeatherApp.services.SensorsService;
 import ru.merkulova.WeatherApp.util.ErrorNotCreated;
 import ru.merkulova.WeatherApp.util.ErrorResponse;
 import ru.merkulova.WeatherApp.util.ErrorsUtil;
@@ -30,7 +26,7 @@ public class MeasurementController {
     private final MeasurementValidator measurementValidator;
 
 
-    public MeasurementController(MeasurementsService measurementsService, SensorsService sensorsService, ModelMapper modelMapper, MeasurementValidator measurementValidator) {
+    public MeasurementController(MeasurementsService measurementsService, ModelMapper modelMapper, MeasurementValidator measurementValidator) {
         this.measurementsService = measurementsService;
         this.modelMapper = modelMapper;
         this.measurementValidator = measurementValidator;
@@ -39,6 +35,11 @@ public class MeasurementController {
     @GetMapping
     public List<MeasurementDTO> getMeasurements() {
         return measurementsService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList());
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public Long getRainyDaysCount() {
+        return measurementsService.findAll().stream().filter(Measurement::getRaining).count();
     }
 
     @PostMapping("/add")
@@ -51,11 +52,6 @@ public class MeasurementController {
         }
         measurementsService.save(measurementAdd);
         return ResponseEntity.ok(HttpStatus.CREATED);
-    }
-
-
-    private Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
-        return modelMapper.map(measurementDTO, Measurement.class);
     }
 
     private MeasurementDTO convertToMeasurementDTO(Measurement measurement) {

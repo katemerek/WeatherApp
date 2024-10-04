@@ -2,8 +2,6 @@ package ru.merkulova.WeatherApp.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import ru.merkulova.WeatherApp.models.Sensor;
 import ru.merkulova.WeatherApp.repositories.SensorsRepository;
 

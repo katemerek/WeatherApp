@@ -1,7 +1,5 @@
 package ru.merkulova.WeatherApp.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,5 +27,4 @@ public class MeasurementDTO {
     @ManyToOne
     @JoinColumn(name="sensor", referencedColumnName = "name")
     private Sensor sensor;
-
 }

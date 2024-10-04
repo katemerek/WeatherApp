@@ -12,7 +12,7 @@ public class MeasurementValidator implements Validator {
 
     private final SensorsService sensorsService;
 
-    public MeasurementValidator(MeasurementsService measurementsService, SensorsService sensorsService) {
+    public MeasurementValidator(SensorsService sensorsService) {
         this.sensorsService = sensorsService;
     }
 
