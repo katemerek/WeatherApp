@@ -35,7 +35,7 @@ public class MeasurementsService {
 
     public void enrichMeasurement(Measurement measurement) {
 
-        measurement.setSensor(String.valueOf(sensorsService.findByName(measurement.getSensorData()).get()));//тут проблема
+        measurement.setSensor(sensorsService.findByName(measurement.getSensor().getName()).get());
         measurement.setTimeMeasurement(LocalDateTime.now());
     }
 

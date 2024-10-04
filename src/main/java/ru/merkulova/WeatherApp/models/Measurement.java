@@ -1,5 +1,6 @@
 package ru.merkulova.WeatherApp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.*;
@@ -29,22 +30,15 @@ public class Measurement implements Serializable {
     @NotNull
     private Double value;
 
-
     @Column(name="raining")
     private Boolean raining;
-
-    @NotEmpty(message = "Sensor should not be empty")
-    @Column(name="sensor",insertable=false, updatable=false)
-    private String sensor;
 
     @Column(name="time_measurement")
     private LocalDateTime timeMeasurement;
 
-    @JsonProperty("sensor")
-    private String sensorData;
-
+    @NotNull
     @ManyToOne
     @JoinColumn(name="sensor", referencedColumnName = "name")
-    private Sensor sensor_owner;
+    private Sensor sensor;
 }
 

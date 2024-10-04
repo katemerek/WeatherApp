@@ -28,7 +28,7 @@ public class Sensor implements Serializable {
     @NotEmpty(message ="Name should not be empty")
     private String name;
 
-//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor_owner")
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "sensor")
 //    @Cascade(org.hibernate.annotations.CascadeType.ALL)
 //    private List<Measurement> measurements;
 }
