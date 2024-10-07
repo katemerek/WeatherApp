@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.merkulova.WeatherApp.dto.MeasurementDTO;
+import ru.merkulova.WeatherApp.dto.MeasurementsResponse;
 import ru.merkulova.WeatherApp.models.Measurement;
 import ru.merkulova.WeatherApp.services.MeasurementsService;
 import ru.merkulova.WeatherApp.util.ErrorNotCreated;
@@ -33,8 +34,8 @@ public class MeasurementController {
     }
 
     @GetMapping
-    public List<MeasurementDTO> getMeasurements() {
-        return measurementsService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList());
+    public MeasurementsResponse getMeasurements() {
+        return new MeasurementsResponse(measurementsService.findAll().stream().map(this::convertToMeasurementDTO).collect(Collectors.toList()));
     }
 
     @GetMapping("/rainyDaysCount")
