@@ -1,14 +1,13 @@
 package ru.merkulova.WeatherApp.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import ru.merkulova.WeatherApp.models.Measurement;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MeasurementsResponse {
     private List<MeasurementDTO> measurements;
-
-    public MeasurementsResponse(List<MeasurementDTO> measurements) {
-        this.measurements = measurements;
-    }
 }

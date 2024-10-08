@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import ru.merkulova.WeatherApp.models.Measurement;
-import ru.merkulova.WeatherApp.services.MeasurementsService;
 import ru.merkulova.WeatherApp.services.SensorsService;
 
 @Component

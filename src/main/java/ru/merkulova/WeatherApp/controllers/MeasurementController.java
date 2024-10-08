@@ -15,7 +15,6 @@ import ru.merkulova.WeatherApp.util.ErrorResponse;
 import ru.merkulova.WeatherApp.util.ErrorsUtil;
 import ru.merkulova.WeatherApp.util.MeasurementValidator;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
