@@ -22,3 +22,5 @@ The app will start running at <http://localhost:8080>.
 - GET /measurements
 - POST /measurements/add
 - GET /measurements/rainyDaysCount
+
+This sentence for review.
