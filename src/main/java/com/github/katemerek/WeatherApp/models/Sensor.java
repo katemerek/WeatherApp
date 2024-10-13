@@ -21,7 +21,7 @@ public class Sensor implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name="name", unique = true, insertable = false, updatable = false)
+    @Column(name="name")
     @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     @NotBlank(message ="Name should not be empty")
     private String name;

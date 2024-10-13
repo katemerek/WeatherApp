@@ -2,6 +2,7 @@ package com.github.katemerek.WeatherApp.util;
 
 import com.github.katemerek.WeatherApp.models.Measurement;
 import com.github.katemerek.WeatherApp.services.SensorsService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -25,6 +26,6 @@ public class MeasurementValidator implements Validator {
         Measurement measurement = (Measurement) target;
         if (measurement.getSensor()==null) {return;}
         if(sensorsService.findByName(measurement.getSensor().getName()).isEmpty()) {
-        errors.rejectValue("name", "This sensor don't exist!");}
+        errors.rejectValue("sensor", String.valueOf(HttpStatus.BAD_REQUEST), "This sensor don't exist!");}
     }
 }

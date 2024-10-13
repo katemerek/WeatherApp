@@ -1,5 +1,7 @@
 package com.github.katemerek.WeatherApp.util;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -22,7 +24,7 @@ public class SensorValidator implements Validator {
     public void validate(Object target, Errors errors) {
         Sensor sensor = (Sensor) target;
         if (sensorsService.findByName(sensor.getName()).isPresent())
-            errors.rejectValue("name", "This sensor already exist!");
+            errors.rejectValue("name", String.valueOf(HttpStatus.BAD_REQUEST), "This sensor is already created");
     }
 }
 
