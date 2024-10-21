@@ -1,5 +1,6 @@
 package com.github.katemerek.WeatherApp.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.github.katemerek.WeatherApp.models.Measurement;
@@ -10,15 +11,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class MeasurementsService {
 
     private final MeasurementsRepository measurementsRepository;
     private final SensorsService sensorsService;
-
-    public MeasurementsService(MeasurementsRepository measurementsRepository, SensorsService sensorsService) {
-        this.measurementsRepository = measurementsRepository;
-        this.sensorsService = sensorsService;
-    }
 
     public List<Measurement> findAll() {
         return measurementsRepository.findAll();

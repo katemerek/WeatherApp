@@ -1,5 +1,6 @@
 package com.github.katemerek.WeatherApp.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -12,6 +13,7 @@ import com.github.katemerek.WeatherApp.models.Sensor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Schema(description = "measurement")
 public class MeasurementDTO {
 
     @Column(name="value")
@@ -20,7 +22,6 @@ public class MeasurementDTO {
     @NotNull
     private Double value;
 
-    @Column(name="raining")
     private Boolean raining;
 
     @ManyToOne
