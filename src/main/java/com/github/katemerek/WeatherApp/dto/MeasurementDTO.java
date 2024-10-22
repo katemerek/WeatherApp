@@ -16,7 +16,6 @@ import com.github.katemerek.WeatherApp.models.Sensor;
 @Schema(description = "measurement")
 public class MeasurementDTO {
 
-    @Column(name="value")
     @Min(-100)
     @Max(100)
     @NotNull

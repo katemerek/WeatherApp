@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MeasurementsService {
 
     private final MeasurementsRepository measurementsRepository;

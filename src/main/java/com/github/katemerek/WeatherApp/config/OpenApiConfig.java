@@ -13,7 +13,8 @@ public class OpenApiConfig {
 
     @Bean
     public OpenAPI weatherAppOpenApi() {
-        return new OpenAPI().info(new Info().title("WeatherApp")
+        return new OpenAPI().info(new Info()
+                        .title("WeatherApp")
                         .version("v1")
                         .description(appDescription)
                         .contact(new Contact().name("Ekaterina Merkulova")
