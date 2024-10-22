@@ -10,7 +10,7 @@ This project is made for educational purposes with Spring Boot. In the repositor
 - Add a new measurement to table measurement: value temperature,  (The sensor field must match one of the sensor names registered in the sensor table)
 
 Test the API with client tool such as special app (RestClientForWeatherApp) or Postman to perform various operations.
-The app will start running at <http://localhost:8080>.
+The app will start running at <http://localhost:8080/api/v1>.
 #### Measurement parameters
 - air temperature (value, double),
 - is it raining outside (raining),
@@ -22,3 +22,5 @@ The app will start running at <http://localhost:8080>.
 - GET /measurements
 - POST /measurements/add
 - GET /measurements/rainyDaysCount
+
+This sentence for review.
