@@ -1,5 +1,6 @@
 package com.github.katemerek.WeatherApp.services;
 
+import com.github.katemerek.WeatherApp.mapper.SensorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ import java.util.Optional;
 public class SensorsService {
 
     private final SensorsRepository sensorsRepository;
+    private final SensorMapper sensorMapper;
 
     public List<Sensor> findAll() {return sensorsRepository.findAll();}
 

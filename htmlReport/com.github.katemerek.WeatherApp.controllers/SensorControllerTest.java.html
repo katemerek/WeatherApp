@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SensorControllerTest.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">com.github.katemerek.WeatherApp.controllers</a> &gt; <span class="el_source">SensorControllerTest.java</span></div><h1>SensorControllerTest.java</h1><pre class="source lang-java linenums">package com.github.katemerek.WeatherApp.controllers;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.katemerek.WeatherApp.mapper.SensorMapper;
+import com.github.katemerek.WeatherApp.models.Sensor;
+import com.github.katemerek.WeatherApp.services.SensorsService;
+import com.github.katemerek.WeatherApp.util.SensorValidator;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@WebMvcTest(SensorController.class)
+<span class="fc" id="L26">class SensorControllerTest {</span>
+    @Autowired
+    private MockMvc mvc;
+    @Autowired
+    ObjectMapper mapper;
+    @MockBean
+    private SensorsService sensorsService;
+    @MockBean
+    private SensorValidator sensorValidator;
+    @MockBean
+    private SensorMapper sensorMapper;
+
+
+    private List&lt;Sensor&gt; getSensors() {
+<span class="fc" id="L40">        Sensor one = new Sensor(1, &quot;sensor_test1&quot;);</span>
+<span class="fc" id="L41">        Sensor two = new Sensor(2, &quot;sensor_test2&quot;);</span>
+<span class="fc" id="L42">        return List.of(one, two);</span>
+    }
+
+    @DisplayName(&quot;GET /sensors возвращает HTTP-ответ со статусом 200 ОК и список зарегистрированных сенсоров&quot;)
+    @Test
+    void getAllSensors_ReturnsAllSensors() throws Exception {
+<span class="fc" id="L48">        Mockito.when(this.sensorsService.findAll()).thenReturn(getSensors());</span>
+
+<span class="fc" id="L50">        mvc.perform(get(&quot;/api/v1/sensors&quot;))</span>
+<span class="fc" id="L51">                .andExpect(status().isOk())</span>
+<span class="fc" id="L52">                .andExpect(jsonPath(&quot;$.length()&quot;).value(2));</span>
+<span class="fc" id="L53">    }</span>
+
+    @DisplayName(&quot;POST /sensors/registration возвращает HTTP-ответ со статусом 200 CREATED&quot;)
+    @Test
+    void createSensor_ReturnsCreated() throws Exception {
+<span class="fc" id="L58">        Sensor sensorToAdd = new Sensor(1, &quot;sensor_test1&quot;);</span>
+<span class="fc" id="L59">        Mockito.when(this.sensorsService.save(sensorToAdd)).thenReturn(sensorToAdd);</span>
+
+<span class="fc" id="L61">        mvc.perform(post(&quot;/api/v1/sensors/registration&quot;)</span>
+<span class="fc" id="L62">                        .content(mapper.writeValueAsString(sensorToAdd))</span>
+<span class="fc" id="L63">                        .contentType(MediaType.APPLICATION_JSON))</span>
+<span class="fc" id="L64">                .andExpect(status().isOk())</span>
+<span class="fc" id="L65">                .andExpect(content().contentType(&quot;application/json&quot;));</span>
+<span class="fc" id="L66">    }</span>
+
+//    @DisplayName(&quot;POST /sensors/registration возвращает HTTP-ответ со статусом 400 BAD_REQUEST&quot;)
+//    @Test
+//    void createSensor_ReturnsBadRequest() throws Exception {
+//        given(sensorsService.save(new Sensor(1, &quot;sensor_test1&quot;))).willReturn(new Sensor());
+//        Sensor sensorToAdd2 = new Sensor(2, &quot;sensor_test1&quot;);
+//        Sensor sensorToAdd = new Sensor(1, &quot;sensor_test1&quot;);
+//        Mockito.when(this.sensorsService.save(sensorToAdd)).thenReturn(sensorToAdd);
+//
+//        mvc.perform(post(&quot;/api/v1/sensors/registration&quot;)
+//                        .content(mapper.writeValueAsString(sensorToAdd2))
+//                        .contentType(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest());
+//    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

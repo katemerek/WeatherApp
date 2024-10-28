@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MeasurementController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">jacoco.exec</a> &gt; <a href="index.source.html" class="el_package">com.github.katemerek.WeatherApp.controllers</a> &gt; <span class="el_source">MeasurementController.java</span></div><h1>MeasurementController.java</h1><pre class="source lang-java linenums">package com.github.katemerek.WeatherApp.controllers;
+
+import com.github.katemerek.WeatherApp.dto.MeasurementDTO;
+import com.github.katemerek.WeatherApp.mapper.MeasurementMapper;
+import com.github.katemerek.WeatherApp.models.Measurement;
+import com.github.katemerek.WeatherApp.services.MeasurementsService;
+import com.github.katemerek.WeatherApp.util.ErrorsUtil;
+import com.github.katemerek.WeatherApp.util.MeasurementValidator;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.*;
+
+import java.util.List;
+
+@Tag(name = &quot;Measurement&quot;, description = &quot;The Measurement API&quot;)
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(&quot;/api/v1/measurements&quot;)
+public class MeasurementController {
+
+    private final MeasurementsService measurementsService;
+    private final MeasurementValidator measurementValidator;
+    private final MeasurementMapper measurementMapper;
+
+    @Operation(summary = &quot;Gets all measurements&quot;)
+            @ApiResponse(
+                    responseCode = &quot;200&quot;,
+                    description = &quot;Found the measurements&quot;,
+                    content = {
+                            @Content(
+                                    mediaType = &quot;application/json&quot;,
+                                    array = @ArraySchema(schema = @Schema(implementation = MeasurementDTO.class)))
+                    })
+    @GetMapping
+    public List &lt;MeasurementDTO&gt; getMeasurements() {
+<span class="fc" id="L46">        return measurementsService.findAll()</span>
+<span class="fc" id="L47">                .stream()</span>
+<span class="fc" id="L48">                .map(measurementMapper::toMeasurementDTO)</span>
+<span class="fc" id="L49">                .toList();</span>
+    }
+
+    @Operation(summary = &quot;Count the number of rainy days&quot;)
+            @ApiResponse(
+                    responseCode = &quot;200&quot;,
+                    description = &quot;Number of rainy days&quot;)
+    @GetMapping(&quot;/rainyDaysCount&quot;)
+    public Long getRainyDaysCount() {
+<span class="fc" id="L58">        return measurementsService.findAll().stream().filter(Measurement::getRaining).count();</span>
+    }
+
+
+    @Operation(summary = &quot;Add a new measurement&quot;)
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = &quot;200&quot;,
+                    description = &quot;CREATED&quot;),
+            @ApiResponse(
+                    responseCode = &quot;400&quot;,
+                    description = &quot;Measurement not added, sensor with such name is not registered in the system&quot;)})
+    @PostMapping(&quot;/add&quot;)
+    public ResponseEntity&lt;HttpStatus&gt; createMeasurement(@RequestBody @Valid MeasurementDTO measurementDTO, BindingResult bindingResult) {
+
+<span class="fc" id="L73">        Measurement measurementAdd = measurementMapper.toMeasurement(measurementDTO);</span>
+<span class="fc" id="L74">        measurementValidator.validate(measurementAdd, bindingResult);</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (bindingResult.hasErrors()) {</span>
+<span class="nc" id="L76">            ErrorsUtil.returnError(bindingResult);</span>
+        }
+<span class="fc" id="L78">        measurementsService.save(measurementAdd);</span>
+<span class="fc" id="L79">        return ResponseEntity.ok(HttpStatus.CREATED);</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
