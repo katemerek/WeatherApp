@@ -27,4 +27,5 @@ public class MeasurementDTO {
     @JoinColumn(name="sensor", referencedColumnName = "name")
     @NotNull
     private Sensor sensor;
+
 }

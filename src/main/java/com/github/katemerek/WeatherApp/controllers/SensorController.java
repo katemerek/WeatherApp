@@ -43,8 +43,10 @@ public class SensorController {
                     })
     @GetMapping
     public List<SensorDTO> getAllSensors() {
-        List <Sensor> sensors = sensorsService.findAll();
-        return sensorMapper.toSensorDTOList(sensors);
+        return sensorsService.findAll()
+                .stream()
+                .map(sensorMapper::toSensorDTO)
+                .toList();
     }
 
 

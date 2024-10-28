@@ -43,10 +43,11 @@ public class MeasurementController {
                     })
     @GetMapping
     public List <MeasurementDTO> getMeasurements() {
-        List<Measurement> measurements = measurementsService.findAll();
-        return measurementMapper.toMeasurementDTOList(measurements);
+        return measurementsService.findAll()
+                .stream()
+                .map(measurementMapper::toMeasurementDTO)
+                .toList();
     }
-
 
     @Operation(summary = "Count the number of rainy days")
             @ApiResponse(
